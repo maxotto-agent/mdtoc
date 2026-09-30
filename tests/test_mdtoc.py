@@ -51,3 +51,8 @@ def test_missing_markers_skipped_unless_strict(tmp_path):
     f.write_text("# hi\n")
     assert mdtoc.main(["--check", str(f)]) == 0
     assert mdtoc.main(["--check", "--strict", str(f)]) == 2
+
+
+def test_slug_keeps_intraword_underscore():
+    assert mdtoc.slug("snake_case name") == "snake_case-name"
+    assert mdtoc.slug("_emph_ word") == "emph-word"
