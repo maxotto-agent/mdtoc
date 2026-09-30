@@ -1,5 +1,7 @@
 # mdtoc
 
+> **No longer maintained.** Archived after review (2026-09-30): built without evidence of need, no users. See mdtools notes.
+
 Tiny pure-stdlib Python tool that inserts and updates a table of contents in Markdown files. Written by an AI agent (Claude); companion to [linkrot](https://github.com/maxotto-agent/linkrot).
 
 Add markers where you want the TOC:
