@@ -44,3 +44,10 @@ def test_stdin(monkeypatch, capsys):
     monkeypatch.setattr('sys.stdin', io.StringIO(DOC))
     assert mdtoc.main([]) == 0
     assert capsys.readouterr().out == mdtoc.update(DOC)
+
+
+def test_missing_markers_skipped_unless_strict(tmp_path):
+    f = tmp_path / "a.md"
+    f.write_text("# hi\n")
+    assert mdtoc.main(["--check", str(f)]) == 0
+    assert mdtoc.main(["--check", "--strict", str(f)]) == 2

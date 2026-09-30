@@ -89,7 +89,6 @@ def main(argv=None):
     p = argparse.ArgumentParser(prog='mdtoc', description=__doc__.split('\n')[0])
     p.add_argument('files', nargs='*', help="files to process; with none, filter stdin to stdout")
     p.add_argument('--check', action='store_true', help='exit 1 if any TOC is stale')
-    p.add_argument('--strict', action='store_true', help='fail on files that have no TOC markers (default: skip them)')
     p.add_argument('--min-level', type=int, default=2)
     p.add_argument('--max-level', type=int, default=4)
     a = p.parse_args(argv)
@@ -106,9 +105,8 @@ def main(argv=None):
         old = open(f, encoding='utf-8').read()
         new = update(old, a.min_level, a.max_level)
         if new is None:
-            if a.strict:
-                print(f'{f}: no {START} / {END} markers', file=sys.stderr)
-                rc = 2
+            print(f'{f}: no {START} / {END} markers', file=sys.stderr)
+            rc = 2
         elif new != old:
             if a.check:
                 print(f'{f}: TOC out of date')

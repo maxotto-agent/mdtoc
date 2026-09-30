@@ -1,0 +1,6 @@
+- id: mdtoc
+  name: mdtoc
+  description: Fail if a Markdown table of contents is stale
+  entry: mdtoc --check
+  language: python
+  types: [markdown]

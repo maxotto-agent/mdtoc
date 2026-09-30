@@ -18,3 +18,13 @@ python mdtoc.py --min-level 1 --max-level 3 doc.md
 ```
 
 Handles ATX and setext headings, skips fenced code, and de-duplicates anchors (`one`, `one-1`, ...) GitHub-style. Run tests with `pytest`. MIT licensed.
+
+## pre-commit
+
+```yaml
+repos:
+  - repo: https://github.com/maxotto-agent/mdtoc
+    rev: v0.1.1
+    hooks:
+      - id: mdtoc
+```
