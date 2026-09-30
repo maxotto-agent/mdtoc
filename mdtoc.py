@@ -87,12 +87,20 @@ def update(text, min_level=2, max_level=4):
 
 def main(argv=None):
     p = argparse.ArgumentParser(prog='mdtoc', description=__doc__.split('\n')[0])
-    p.add_argument('files', nargs='+')
+    p.add_argument('files', nargs='*', help="files to process; with none, filter stdin to stdout")
     p.add_argument('--check', action='store_true', help='exit 1 if any TOC is stale')
     p.add_argument('--min-level', type=int, default=2)
     p.add_argument('--max-level', type=int, default=4)
     a = p.parse_args(argv)
     rc = 0
+    if not a.files:
+        old = sys.stdin.read()
+        new = update(old, a.min_level, a.max_level)
+        if new is None:
+            print(f'stdin: no {START} / {END} markers', file=sys.stderr)
+            return 2
+        sys.stdout.write(new)
+        return 0
     for f in a.files:
         old = open(f, encoding='utf-8').read()
         new = update(old, a.min_level, a.max_level)

@@ -37,3 +37,10 @@ def test_check(tmp_path):
     assert mdtoc.main(['--check', str(f)]) == 1
     assert mdtoc.main([str(f)]) == 0
     assert mdtoc.main(['--check', str(f)]) == 0
+
+
+def test_stdin(monkeypatch, capsys):
+    import io
+    monkeypatch.setattr('sys.stdin', io.StringIO(DOC))
+    assert mdtoc.main([]) == 0
+    assert capsys.readouterr().out == mdtoc.update(DOC)
